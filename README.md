@@ -8,10 +8,9 @@ the idea is to transcribe the audio of a video file (e.g. from a meeting recordi
 
 ## mp4 to mp3
 
-option 1: using ffmpeg
+using ffmpeg
 ffmpeg -c:a copy
-
-option 2: feedeing mp4 directly to openAI Whisper
+ffmpeg -i input.mp4 -q:a 0 -map a output.mp3
 
 ## mp3 to text
 
@@ -19,12 +18,21 @@ using openAI Whisper
 
 ## text to translation
 
-translatioon to english is included in the openAI Whisper
+translation to english is included in the openAI Whisper
 
 ## sum up
 
 creating a summary of the meeting, using AI
 
-## installation
+# transcription speed
+
+test for a 1min mp3 file (4700 words)
+on a X1 Gen8 laptop (i7 10 core 1,7MHz / 32GB RAM)
+
+tiny 0.1min
+turbo 0.7min
+large
 
 ## ToDo
+
+- WhisperX
