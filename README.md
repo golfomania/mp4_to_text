@@ -34,5 +34,3 @@ turbo 0.7min
 large
 
 ## ToDo
-
-- WhisperX
