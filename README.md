@@ -23,6 +23,7 @@ translation to english is included in the openAI Whisper
 ## sum up
 
 creating a summary of the meeting, using AI
+Test done with Copilot by uploading local txt file and ask for a summary > worked
 
 # transcription speed
 
