@@ -5,7 +5,7 @@
 ############################################
 # mp4 to mp3 with PowerShell
 # $filepath = "path\to\your\file"
-# ffmpeg -i $filepath -q:a 0 -map a ./output.mp3
+# ffmpeg -i $filepath -q:a 0 -map a ./output.mp3 -y
 #
 # first section of file (for investigations / tests) with PowerShell
 # ffmpeg -i ./output.mp3 -t 00:01:00 -c copy output_short.mp3
@@ -27,7 +27,9 @@ suffix = input("Please enter the suffix of the file you want to transcribe: ")
 
 # Load the Whisper model
 # model = whisper.load_model("tiny")
-model = whisper.load_model("turbo")
+# model = whisper.load_model("tiny.en")
+model = whisper.load_model("base.en")
+# model = whisper.load_model("turbo")
 # model = whisper.load_model("large")
 
 # Record the start time
@@ -36,14 +38,15 @@ start_time = time.time()
 
 # Set decoding options with language specified as German
 options = {
-     "language":"de", 
+     # "language":"de", 
      "fp16":False,
      "beam_size": 5 #default: 5
     }
 
 # Decode the audio
 result = model.transcribe("output.mp3", **options)
-print(result["text"])
+# print(result["text"])
+
 # Save the recognized text
 with open(datetime.datetime.now().strftime('%Y.%m.%d') + "_transcription_" + suffix + ".txt", "w", encoding="utf-8") as f:
     f.write(result["text"])
