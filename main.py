@@ -28,8 +28,8 @@ suffix = input("Please enter the suffix of the file you want to transcribe: ")
 # Load the Whisper model
 # model = whisper.load_model("tiny")
 # model = whisper.load_model("tiny.en")
-model = whisper.load_model("base.en")
-# model = whisper.load_model("turbo")
+# model = whisper.load_model("base.en")
+model = whisper.load_model("turbo")
 # model = whisper.load_model("large")
 
 # Record the start time
@@ -39,6 +39,7 @@ start_time = time.time()
 # Set decoding options with language specified as German
 options = {
      # "language":"de", 
+     "language":"en", 
      "fp16":False,
      "beam_size": 5 #default: 5
     }
