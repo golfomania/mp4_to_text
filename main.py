@@ -24,22 +24,41 @@ import time
 
 # ask in CLI for the suffix text
 suffix = input("Please enter the suffix of the file you want to transcribe: ")
+selected_language = input("What language was the meeting [0]mixed, [1]english, [2]german: ")
+selected_model = input("What AI model to use [0]large, [1]turbo, [2]base.en, [3]tiny.en, [4]tiny: ")
 
 # Load the Whisper model
-# model = whisper.load_model("tiny")
-# model = whisper.load_model("tiny.en")
-# model = whisper.load_model("base.en")
-model = whisper.load_model("turbo")
-# model = whisper.load_model("large")
+match selected_model:
+    case "0":
+        model = whisper.load_model("large")
+    case "1":
+        model = whisper.load_model("turbo")
+    case "2":
+        model = whisper.load_model("base.en")
+    case "3":
+        model = whisper.load_model("tiny.en")
+    case "4":
+        model = whisper.load_model("tiny")
+    case _:
+        model = whisper.load_model("turbo")
+
 
 # Record the start time
 print("Start decoding the audio file at: ", datetime.datetime.now().strftime('%d.%m.%Y %H:%M:%S'))
 start_time = time.time()
 
+if selected_language == "0":
+    meeting_language = ""
+elif selected_language == "1":
+    meeting_language = "en"
+elif selected_language == "2":
+    meeting_language = "de"
+
+
+
 # Set decoding options with language specified as German
 options = {
-     # "language":"de", 
-     "language":"en", 
+     "language": meeting_language, 
      "fp16":False,
      "beam_size": 5 #default: 5
     }
@@ -65,3 +84,4 @@ with open(datetime.datetime.now().strftime('%Y.%m.%d') + "_transcription_" + suf
 words = content.split()
 word_count = len(words)
 print(f'\nThe number of words in the transcription file: {word_count}')
+print(f'\nTranscription finished for file: {suffix}')
