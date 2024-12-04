@@ -24,8 +24,12 @@ import time
 
 # ask in CLI for the suffix text
 suffix = input("Please enter the suffix of the file you want to transcribe: ")
-selected_language = input("What language was the meeting [0]mixed, [1]english, [2]german: ")
-selected_model = input("What AI model to use [0]large, [1]turbo, [2]base.en, [3]tiny.en, [4]tiny: ")
+selected_language = input("What language was the meeting [0]mixed, [1]english(default), [2]german: ")
+if not selected_language:
+    selected_language = "1"
+selected_model = input("What AI model to use [0]large, [1]turbo(default), [2]base.en, [3]tiny.en, [4]tiny: ")
+if not selected_model:
+    selected_model = "1"
 
 # Load the Whisper model
 match selected_model:
@@ -44,7 +48,7 @@ match selected_model:
 
 
 # Record the start time
-print("Start decoding the audio file at: ", datetime.datetime.now().strftime('%d.%m.%Y %H:%M:%S'))
+print("\nStart decoding the audio file at: ", datetime.datetime.now().strftime('%d.%m.%Y %H:%M:%S'))
 start_time = time.time()
 
 if selected_language == "0":
@@ -76,12 +80,12 @@ end_time = time.time()
 
 # Calculate and print the elapsed time
 elapsed_time = (end_time - start_time) / 60
-print(f'\n\nTime needed to run the script: {elapsed_time:.1f} minutes')
+print(f'Time needed to run the script: {elapsed_time:.1f} minutes')
 
 # count words
 with open(datetime.datetime.now().strftime('%Y.%m.%d') + "_transcription_" + suffix + ".txt", 'r', encoding='utf-8') as file:
     content = file.read()
 words = content.split()
 word_count = len(words)
-print(f'\nThe number of words in the transcription file: {word_count}')
-print(f'\nTranscription finished for file: {suffix}')
+print(f'The number of words in the transcription file: {word_count}')
+print(f'Transcription finished for file: {suffix}\n')
