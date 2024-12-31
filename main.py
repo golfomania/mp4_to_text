@@ -18,9 +18,8 @@
 import datetime
 import whisper
 import time
-# import torch # test showed no improvement in speed
-# Set the number of threads
-# torch.set_num_threads(10)
+import warnings
+warnings.filterwarnings("ignore", message=".*You are using `torch.load` with `weights_only=False`.*")
 
 # ask in CLI for the suffix text
 suffix = input("Please enter the suffix of the file you want to transcribe: ")
@@ -34,18 +33,17 @@ if not selected_model:
 # Load the Whisper model
 match selected_model:
     case "0":
-        model = whisper.load_model("large")
+        model = whisper.load_model("large", device="cpu")
     case "1":
-        model = whisper.load_model("turbo")
+        model = whisper.load_model("turbo", device="cpu")
     case "2":
-        model = whisper.load_model("base.en")
+        model = whisper.load_model("base.en", device="cpu")
     case "3":
-        model = whisper.load_model("tiny.en")
+        model = whisper.load_model("tiny.en", device="cpu")
     case "4":
-        model = whisper.load_model("tiny")
+        model = whisper.load_model("tiny", device="cpu")
     case _:
-        model = whisper.load_model("turbo")
-
+        model = whisper.load_model("turbo", device="cpu")
 
 # Record the start time
 print("\nStart decoding the audio file at: ", datetime.datetime.now().strftime('%d.%m.%Y %H:%M:%S'))
@@ -59,7 +57,6 @@ elif selected_language == "2":
     meeting_language = "de"
 
 
-
 # Set decoding options with language specified as German
 options = {
      "language": meeting_language, 
@@ -69,6 +66,7 @@ options = {
 
 # Decode the audio
 result = model.transcribe("output.mp3", **options)
+# result = model.transcribe("infoniqa_podcast/folge9.mp3", **options)
 # print(result["text"])
 
 # Save the recognized text
