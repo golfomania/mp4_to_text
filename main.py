@@ -66,7 +66,6 @@ options = {
 
 # Decode the audio
 result = model.transcribe("output.mp3", **options)
-# result = model.transcribe("infoniqa_podcast/folge9.mp3", **options)
 # print(result["text"])
 
 # Save the recognized text
