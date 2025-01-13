@@ -27,32 +27,6 @@ suffix = input("Please enter the suffix of the file you want to transcribe: ")
 selected_language = input("What language was the meeting [0]mixed, [1]english(default), [2]german: ")
 if not selected_language:
     selected_language = "1"
-<<<<<<< HEAD
-=======
-selected_model = input("What AI model to use [0]large, [1]turbo(default), [2]base.en, [3]tiny.en, [4]tiny: ")
-if not selected_model:
-    selected_model = "1"
-
-# Load the Whisper model
-match selected_model:
-    case "0":
-        model = whisper.load_model("large", device="cpu")
-    case "1":
-        model = whisper.load_model("turbo", device="cpu")
-    case "2":
-        model = whisper.load_model("base.en", device="cpu")
-    case "3":
-        model = whisper.load_model("tiny.en", device="cpu")
-    case "4":
-        model = whisper.load_model("tiny", device="cpu")
-    case _:
-        model = whisper.load_model("turbo", device="cpu")
-
-# Record the start time
-print("\nStart decoding the audio file at: ", datetime.datetime.now().strftime('%d.%m.%Y %H:%M:%S'))
-start_time = time.time()
-
->>>>>>> 916e26c536b6ccd81c1610ee22ebdb033925d203
 if selected_language == "0":
     meeting_language = ""
 elif selected_language == "1":
