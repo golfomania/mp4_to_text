@@ -24,41 +24,43 @@ import time
 
 # ask in CLI for the suffix text
 suffix = input("Please enter the suffix of the file you want to transcribe: ")
+# ask for the language of the meeting
 selected_language = input("What language was the meeting [0]mixed, [1]english(default), [2]german: ")
 if not selected_language:
     selected_language = "1"
-selected_model = input("What AI model to use [0]large, [1]turbo(default), [2]base.en, [3]tiny.en, [4]tiny: ")
-if not selected_model:
-    selected_model = "1"
-
-# Load the Whisper model
-match selected_model:
-    case "0":
-        model = whisper.load_model("large")
-    case "1":
-        model = whisper.load_model("turbo")
-    case "2":
-        model = whisper.load_model("base.en")
-    case "3":
-        model = whisper.load_model("tiny.en")
-    case "4":
-        model = whisper.load_model("tiny")
-    case _:
-        model = whisper.load_model("turbo")
-
-
-# Record the start time
-print("\nStart decoding the audio file at: ", datetime.datetime.now().strftime('%d.%m.%Y %H:%M:%S'))
-start_time = time.time()
-
 if selected_language == "0":
     meeting_language = ""
 elif selected_language == "1":
     meeting_language = "en"
 elif selected_language == "2":
     meeting_language = "de"
+print(f"Selected language: {meeting_language}")
+# ask for the AI model to use
+selected_model = input("What AI model to use [0]large, [1]turbo(default), [2]base.en, [3]tiny.en, [4]tiny: ")
+# Load the Whisper model
+match selected_model:
+    case "0":
+        print("Loading large model")
+        model = whisper.load_model("large")
+    case "1":
+        print("Loading turbo model")
+        model = whisper.load_model("turbo")
+    case "2":
+        print("Loading base.en model") 
+        model = whisper.load_model("base.en")
+    case "3":
+        print("Loading tiny.en model
+        model = whisper.load_model("tiny.en")
+    case "4":
+        print("Loading tiny model")
+        model = whisper.load_model("tiny")
+    case _:
+        print("Loading turbo model")
+        model = whisper.load_model("turbo")
 
-
+# Record the start time
+print("\nStart decoding the audio file at: ", datetime.datetime.now().strftime('%d.%m.%Y %H:%M:%S'))
+start_time = time.time()
 
 # Set decoding options with language specified as German
 options = {
