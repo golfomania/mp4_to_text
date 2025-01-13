@@ -18,9 +18,8 @@
 import datetime
 import whisper
 import time
-# import torch # test showed no improvement in speed
-# Set the number of threads
-# torch.set_num_threads(10)
+import warnings
+warnings.filterwarnings("ignore", message=".*You are using `torch.load` with `weights_only=False`.*")
 
 # ask in CLI for the suffix text
 suffix = input("Please enter the suffix of the file you want to transcribe: ")
