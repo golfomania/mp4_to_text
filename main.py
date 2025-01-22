@@ -48,7 +48,7 @@ match selected_model:
         print("Loading base.en model") 
         model = whisper.load_model("base.en")
     case "3":
-        print("Loading tiny.en model
+        print("Loading tiny.en model")
         model = whisper.load_model("tiny.en")
     case "4":
         print("Loading tiny model")
