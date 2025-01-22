@@ -16,9 +16,11 @@
 # Write-Output $duration
 ############################################
 import datetime
+import platform
 import whisper
 import time
 import warnings
+import pyperclip
 warnings.filterwarnings("ignore", message=".*You are using `torch.load` with `weights_only=False`.*")
 
 # ask in CLI for the suffix text
@@ -76,12 +78,7 @@ result = model.transcribe("output.mp3", **options)
 with open(datetime.datetime.now().strftime('%Y.%m.%d') + "_transcription_" + suffix + ".txt", "w", encoding="utf-8") as f:
     f.write(result["text"])
 
-# Record the end time
-end_time = time.time()
 
-# Calculate and print the elapsed time
-elapsed_time = (end_time - start_time) / 60
-print(f'Time needed to run the script: {elapsed_time:.1f} minutes')
 
 # count words
 with open(datetime.datetime.now().strftime('%Y.%m.%d') + "_transcription_" + suffix + ".txt", 'r', encoding='utf-8') as file:
@@ -90,3 +87,38 @@ words = content.split()
 word_count = len(words)
 print(f'The number of words in the transcription file: {word_count}')
 print(f'Transcription finished for file: {suffix}\n')
+
+# Create formatted string for clipboard
+template = """Erstelle bitte ein strukturiertes Meetingprotokoll aus dem folgenden Transkript. Struktur und formatiere das Protokoll nach folgenden Vorgaben:
+	1. Thema des Meetings: Zusammenfassen, worum es in dem Meeting geht.
+	2. Datum und Uhrzeit: Falls im Transkript vorhanden, extrahieren.
+	3. Teilnehmer (sofern ersichtlich): Liste der erwähnten Personen.
+	4. Diskussionspunkte: Gliedere die Hauptthemen des Gesprächs in einzelne Punkte.
+	5. Beschlüsse: Dokumentiere konkrete Entscheidungen oder Ergebnisse.
+	6. Aufgaben/To-Dos: Liste alle erwähnten Aufgaben, wer sie übernehmen soll (falls ersichtlich), und Fristen (falls genannt).
+	7. Nächste Schritte: Zusammenfassen, was als nächstes passieren soll.
+Hinweise:
+	• Verwende neutrale Formulierungen und halte das Protokoll so kompakt wie möglich.
+	• Wenn bestimmte Details wie Teilnehmer oder Fristen nicht erkennbar sind, notiere "keine Angaben".
+	• Nummeriere die Diskussionspunkte, Beschlüsse und Aufgaben, um eine bessere Übersicht zu schaffen.
+
+Transkipt (enthält keine Sprechererkennung):
+
+{}""".format(content)
+
+# Copy to clipboard
+pyperclip.copy(template)
+print("Formatted text with transcription has been copied to clipboard.")
+
+# Record the end time
+end_time = time.time()
+# Calculate and print the elapsed time
+elapsed_time = (end_time - start_time) / 60
+print(f'Time needed to run the script: {elapsed_time:.1f} minutes')
+
+# Play two beeps to signal completion when run on Windows
+if platform.system() == "Windows":
+    import winsound
+    winsound.Beep(1000, 500)  # frequency = 1000Hz, duration = 500ms
+    time.sleep(0.1)  # Small pause between beeps
+    winsound.Beep(1000, 500)
