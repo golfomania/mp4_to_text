@@ -5,6 +5,7 @@
 ############################################
 # mp4 to mp3 with PowerShell
 # $filepath = "path\to\your\file"
+# on Mac filepath="/path/to/your/file"
 # ffmpeg -i $filepath -q:a 0 -map a ./output.mp3 -y
 #
 # first section of file (for investigations / tests) with PowerShell
@@ -20,7 +21,7 @@ import platform
 import whisper
 import time
 import warnings
-import pyperclip
+# import pyperclip
 warnings.filterwarnings("ignore", message=".*You are using `torch.load` with `weights_only=False`.*")
 
 # ask in CLI for the suffix text
@@ -107,8 +108,9 @@ Transkipt (enthält keine Sprechererkennung):
 {}""".format(content)
 
 # Copy to clipboard
-pyperclip.copy(template)
-print("Formatted text with transcription has been copied to clipboard.")
+if platform.system() == "Windows":
+    pyperclip.copy(template)
+    print("Formatted text with transcription has been copied to clipboard.")
 
 # Record the end time
 end_time = time.time()
