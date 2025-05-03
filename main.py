@@ -21,7 +21,7 @@ import platform
 import whisper
 import time
 import warnings
-# import pyperclip
+import pyperclip
 warnings.filterwarnings("ignore", message=".*You are using `torch.load` with `weights_only=False`.*")
 
 # ask in CLI for the suffix text
@@ -108,9 +108,8 @@ Transkipt (enthält keine Sprechererkennung):
 {}""".format(content)
 
 # Copy to clipboard
-if platform.system() == "Windows":
-    pyperclip.copy(template)
-    print("Formatted text with transcription has been copied to clipboard.")
+pyperclip.copy(template)
+print("Formatted text with transcription has been copied to clipboard.")
 
 # Record the end time
 end_time = time.time()
@@ -118,9 +117,15 @@ end_time = time.time()
 elapsed_time = (end_time - start_time) / 60
 print(f'Time needed to run the script: {elapsed_time:.1f} minutes')
 
-# Play two beeps to signal completion when run on Windows
+# Play notification sound based on platform
 if platform.system() == "Windows":
     import winsound
     winsound.Beep(1000, 500)  # frequency = 1000Hz, duration = 500ms
     time.sleep(0.1)  # Small pause between beeps
     winsound.Beep(1000, 500)
+elif platform.system() == "Darwin":  # macOS
+    import os
+    # Play system sound twice
+    os.system('afplay /System/Library/Sounds/Glass.aiff')
+    time.sleep(0.1)  # Small pause between sounds
+    os.system('afplay /System/Library/Sounds/Glass.aiff')
