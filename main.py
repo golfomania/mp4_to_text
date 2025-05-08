@@ -15,6 +15,11 @@
 # $output = ffmpeg -i output.mp3 2>&1
 # $duration = $output | Select-String -Pattern "Duration" | ForEach-Object { $_.Line.Split(" ")[3].Trim(',') }
 # Write-Output $duration
+#
+# venv on macos
+# source venv/bin/activate
+# python3 main.py
+# deactivate
 ############################################
 import datetime
 import platform
